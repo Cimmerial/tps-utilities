@@ -1,0 +1,5 @@
+# Written by tpsu after successful conversions (copy to conversions.yaml or let tpsu create it).
+# Path: stats/conversions.yaml (override with TPSU_STATS_PATH).
+conversions:
+  jpeg: 0
+  png: 0

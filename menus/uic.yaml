@@ -1,0 +1,18 @@
+title: Universal Image Conversion
+# Successful writes increment stats/conversions.yaml (see stats/conversions.example.yaml).
+stats_file: stats/conversions.yaml
+items:
+  - id: images
+    label: select images
+    action:
+      picks:
+        - kind: files
+          prompt: Select images
+      shell: '{root}/bin/tpsu img convert [PICK1]'
+  - id: folder
+    label: select folder
+    action:
+      picks:
+        - kind: folder
+          prompt: Folder to convert
+      shell: '{root}/bin/tpsu img mass [PICK1]'

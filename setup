@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+
+if ! command -v tps >/dev/null 2>&1; then
+  echo "TPS is required to use tps-utilities."
+  echo "Install: https://github.com/Cimmerial/tps"
+  echo "  curl -fsSL https://raw.githubusercontent.com/Cimmerial/tps/main/scripts/install.sh | bash"
+  echo "Or clone tps and run: go install ./cmd/tps"
+  echo ""
+  read -r -p "Clone the tps repo into a sibling folder now? [y/N] " ans
+  if [[ "${ans,,}" == "y" ]]; then
+    PARENT="$(dirname "$ROOT")"
+    if [[ "$(uname)" == "Darwin" ]]; then
+      picked="$(osascript -e 'POSIX path of (choose folder with prompt "Choose parent folder for tps clone")' 2>/dev/null || true)"
+      if [[ -n "${picked:-}" ]]; then
+        PARENT="${picked%/}"
+      fi
+    fi
+    if [[ ! -d "$PARENT/tps/.git" ]]; then
+      git clone https://github.com/Cimmerial/tps.git "$PARENT/tps"
+    fi
+    echo "Then run: cd $PARENT/tps && go install ./cmd/tps && tps setup --path $ROOT"
+  fi
+  exit 1
+fi
+
+echo "Linking addon with tps setup..."
+tps setup --path "$ROOT" -n tps-utilities
+echo "Build tpsu:"
+mkdir -p "$ROOT/bin"
+go build -o "$ROOT/bin/tpsu" "$ROOT/cmd/tpsu"
+echo "Open tps, switch to tps-utilities, run: uic"

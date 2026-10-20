@@ -1,0 +1,10 @@
+id: tps-utilities
+name: tps-utilities
+version: 0.1.0
+clone_url: https://github.com/Cimmerial/tps-utilities.git
+contract_iteration: 1
+commands:
+  - alias: universal image conversion
+    abbreviation: uic
+    description: convert images via PNG hub (JPEG, PNG, GIF, …)
+    menu: menus/uic.yaml
